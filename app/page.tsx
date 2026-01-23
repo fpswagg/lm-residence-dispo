@@ -75,25 +75,25 @@ export default function Home() {
   }
 
   return (
-    <main style={{ padding: '2rem', maxWidth: '1400px', margin: '0 auto' }}>
-      <div style={{ marginBottom: '2rem' }}>
-        <h1 style={{ fontSize: '2.5rem', fontWeight: 'bold', marginBottom: '0.5rem', color: '#333' }}>
-          LM Residence - Gestion des Disponibilités
+    <main style={{ padding: '1rem', maxWidth: '1200px', margin: '0 auto', minHeight: '100vh' }}>
+      <div style={{ marginBottom: '1.5rem' }}>
+        <h1 style={{ fontSize: '1.5rem', fontWeight: '600', marginBottom: '0.25rem', color: '#333' }}>
+          LM Residence
         </h1>
-        <p style={{ color: '#666', fontSize: '1rem' }}>
-          Gérez la disponibilité des logements depuis l'API externe
+        <p style={{ color: '#666', fontSize: '0.875rem' }}>
+          Gestion des disponibilités
         </p>
       </div>
       
       {error && (
         <div
           style={{
-            padding: '1rem',
-            marginBottom: '1.5rem',
+            padding: '0.75rem 1rem',
+            marginBottom: '1rem',
             backgroundColor: '#fee',
             color: '#c33',
-            borderRadius: '8px',
-            border: '1px solid #fcc',
+            borderRadius: '4px',
+            fontSize: '0.875rem',
             display: 'flex',
             justifyContent: 'space-between',
             alignItems: 'center',
@@ -103,13 +103,13 @@ export default function Home() {
           <button
             onClick={fetchRooms}
             style={{
-              padding: '0.5rem 1rem',
+              padding: '0.375rem 0.75rem',
               backgroundColor: '#c33',
               color: '#fff',
               border: 'none',
               borderRadius: '4px',
               cursor: 'pointer',
-              fontSize: '0.875rem',
+              fontSize: '0.75rem',
             }}
           >
             Réessayer
@@ -118,15 +118,16 @@ export default function Home() {
       )}
 
       {loading ? (
-        <div style={{ textAlign: 'center', padding: '4rem', color: '#666' }}>
-          <div style={{ fontSize: '1.25rem', marginBottom: '0.5rem' }}>Chargement des logements...</div>
-          <div style={{ fontSize: '0.875rem' }}>Connexion à l'API externe</div>
+        <div style={{ textAlign: 'center', padding: '3rem', color: '#666' }}>
+          <div style={{ fontSize: '1rem' }}>Chargement...</div>
         </div>
       ) : (
         <>
-          <div style={{ marginBottom: '1rem', color: '#666', fontSize: '0.875rem' }}>
-            {rooms.length} {rooms.length === 1 ? 'logement trouvé' : 'logements trouvés'}
-          </div>
+          {rooms.length > 0 && (
+            <div style={{ marginBottom: '1rem', color: '#666', fontSize: '0.875rem' }}>
+              {rooms.length} {rooms.length === 1 ? 'logement' : 'logements'}
+            </div>
+          )}
           <RoomList rooms={rooms} onToggle={handleToggle} />
         </>
       )}
