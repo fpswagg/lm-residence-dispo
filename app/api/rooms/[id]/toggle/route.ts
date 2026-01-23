@@ -6,16 +6,28 @@ export async function PATCH(
   { params }: { params: { id: string } }
 ) {
   try {
-    const { id } = params
-    const body = await request.json()
-    const { available } = body
+    const externalId = parseInt(params.id)
+    if (isNaN(externalId)) {
+      return NextResponse.json(
+        { error: 'Invalid room ID' },
+        { status: 400 }
+      )
+    }
 
-    const room = await prisma.room.update({
-      where: { id },
-      data: { available },
+    const body = await request.json()
+    const { disponibilite } = body
+
+    // Upsert the room with new availability status
+    const room = await prisma.room.upsert({
+      where: { externalId },
+      update: { disponibilite },
+      create: {
+        externalId,
+        disponibilite,
+      },
     })
 
-    return NextResponse.json(room)
+    return NextResponse.json({ success: true, room })
   } catch (error) {
     console.error('Error toggling room availability:', error)
     return NextResponse.json(
